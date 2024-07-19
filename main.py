@@ -1,19 +1,18 @@
-from capture import capture_screen
-from control import unpause_game, test_controls
-import cv2
+from control import *
 
 def main():
-    unpause_game()
-    test_controls()
+    game = Game()
+    airplane = Airplane()
 
-    # Uncomment the following lines for continuous screen capture and control
-    # while True:
-    #     frame = capture_screen()
-    #     # basic_control()  # Replace with rule_based_control(frame) for rule-based control
-    #     cv2.imshow('Screen', frame)
-    #     if cv2.waitKey(1) & 0xFF == ord('q'):
-    #         break
-    # cv2.destroyAllWindows()
+    game.unpause_game()
+    airplane.test_controls()
 
 if __name__ == "__main__":
-    main()
+    game = Game()
+    airplane = Airplane(game)
+
+    # Test unpausing the game
+    game.unpause_game()
+
+    # Test airplane controls
+    airplane.test_controls()

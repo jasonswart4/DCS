@@ -1,55 +1,62 @@
 import pygetwindow as gw
+import keyboard
 import time
-import keyboard  # Import keyboard library for key combinations
-from pynput.keyboard import Controller, Key  # Re-import Key module
 
-keyboard_controller = Controller()
+class Game:
+    def __init__(self):
+        self.keyboard = keyboard
 
-def focus_dcs_window():
-    """Bring DCS window to the foreground."""
-    windows = gw.getWindowsWithTitle('Digital Combat Simulator')
-    if windows:
-        dcs_window = windows[0]
-        dcs_window.activate()
-        time.sleep(1)  # Wait for the window to be focused
+    def focus_dcs_window(self):
+        """Bring DCS window to the foreground."""
+        windows = gw.getWindowsWithTitle('Digital Combat Simulator')
+        if windows:
+            dcs_window = windows[0]
+            dcs_window.activate()
+            time.sleep(1)  # Wait for the window to be focused
 
-def unpause_game():
-    """Press 'Esc' to unpause the game."""
-    focus_dcs_window()
-    keyboard_controller.press(Key.esc)
-    keyboard_controller.release(Key.esc)
+    def unpause_game(self):
+        """Press 'Esc' to unpause the game."""
+        self.focus_dcs_window()
+        self.keyboard.press_and_release('esc')
+        time.sleep(0.1)  # Allow time for the action to register
 
-def increase_throttle():
-    """Press 'L Shift + =' to increase throttle."""
-    keyboard.press('=')
-    time.sleep(1)  # Add a small delay to ensure key press is registered
-    keyboard.release('=')
+class Airplane:
+    def __init__(self, game):
+        self.keyboard = keyboard
+        self.game = game
 
-def decrease_throttle():
-    """Press 'L Shift + -' to decrease throttle."""
-    keyboard.press('-')
-    time.sleep(1)  # Add a small delay to ensure key press is registered
-    keyboard.release('-')
+    def increase_throttle(self, duration=1):
+        """Press '=' to increase throttle for the specified duration."""
+        self.game.focus_dcs_window()
+        self.keyboard.press('=')
+        time.sleep(duration)
+        self.keyboard.release('=')
 
-def toggle_wheelbrake(press=True):
-    """Press and hold 'w' to apply wheel brake, release 'w' to release brake."""
-    if press:
-        keyboard_controller.press('w')
-    else:
-        keyboard_controller.release('w')
+    def decrease_throttle(self, duration=1):
+        """Press '-' to decrease throttle for the specified duration."""
+        self.game.focus_dcs_window()
+        self.keyboard.press('-')
+        time.sleep(duration)
+        self.keyboard.release('-')
 
-def test_controls():
-    """Test sequence: Hold wheel brake, increase throttle for 2 seconds, decrease throttle for 2 seconds."""
-    toggle_wheelbrake(True)  # Hold wheel brake
-    time.sleep(1)  # Ensure the brake is held
+    def toggle_wheelbrake(self, press=True):
+        """Press and hold 'w' to apply wheel brake, release 'w' to release brake."""
+        self.game.focus_dcs_window()
+        if press:
+            self.keyboard.press('w')
+            print("Wheel brake applied")
+        else:
+            self.keyboard.release('w')
+            print("Wheel brake released")
 
-    # Hold the wheel brake and perform throttle adjustments
-    try:
-        for _ in range(2):  # Increase throttle for 2 seconds
-            increase_throttle()
-            time.sleep(0.1)
-        for _ in range(2):  # Decrease throttle for 2 seconds
-            decrease_throttle()
-            time.sleep(0.1)
-    finally:
-        toggle_wheelbrake(False)  # Ensure the wheel brake is released
+    def test_controls(self):
+        """Test sequence: Hold wheel brake, increase throttle for 2 seconds, decrease throttle for 2 seconds."""
+        self.toggle_wheelbrake(True)  # Hold wheel brake
+        time.sleep(1)  # Ensure the brake is held
+
+        # Hold the wheel brake and perform throttle adjustments
+        try:
+            self.increase_throttle(1)  # Increase throttle for 2 seconds
+            self.decrease_throttle(1)  # Decrease throttle for 2 seconds
+        finally:
+            self.toggle_wheelbrake(False)  # Ensure the wheel brake is released
