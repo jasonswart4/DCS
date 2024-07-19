@@ -8,11 +8,15 @@ class Game:
 
     def focus_dcs_window(self):
         """Bring DCS window to the foreground."""
-        windows = gw.getWindowsWithTitle('Digital Combat Simulator')
-        if windows:
-            dcs_window = windows[0]
-            dcs_window.activate()
-            time.sleep(1)  # Wait for the window to be focused
+        possible_titles = ['Digital Combat Simulator', 'DCS MT (RT:1 RP:1)']
+        for title in possible_titles:
+            windows = gw.getWindowsWithTitle(title)
+            if windows:
+                dcs_window = windows[0]
+                dcs_window.activate()
+                time.sleep(1)  # Wait for the window to be focused
+                return
+        print("DCS window not found")
 
     def unpause_game(self):
         """Press 'Esc' to unpause the game."""

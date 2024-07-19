@@ -1,11 +1,5 @@
-from control import *
-
-def main():
-    game = Game()
-    airplane = Airplane()
-
-    game.unpause_game()
-    airplane.test_controls()
+from control import Game, Airplane
+import time
 
 if __name__ == "__main__":
     game = Game()
@@ -13,6 +7,3 @@ if __name__ == "__main__":
 
     # Test unpausing the game
     game.unpause_game()
-
-    # Test airplane controls
-    airplane.test_controls()
