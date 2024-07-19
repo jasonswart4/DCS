@@ -29,15 +29,16 @@ class Airplane:
         self.keyboard = keyboard
         self.game = game
         self.directions = {
-            'centre': [76],               # Numpad 5
-            'down_left': [54, 79],        # RShift + Numpad 1
-            'down': [54, 80],             # RShift + Numpad 2
+            'centre': [76],                # Numpad 5
+            'down_left': [54, 79],         # RShift + Numpad 1
+            'down': [54, 80],              # RShift + Numpad 2
             'down_right': [54, 81],        # RShift + Numpad 3
-            'left': [54, 75],             # RShift + Numpad 4
-            'right': [54, 77],            # RShift + Numpad 6
-            'up_left': [54, 71],          # RShift + Numpad 7
+            'left': [54, 75],              # RShift + Numpad 4
+            'right': [54, 77],             # RShift + Numpad 6
+            'up_left': [54, 71],           # RShift + Numpad 7
             'up': [54, 72],                # RShift + Numpad 8
-            'up_right': [54, 73]          # RShift + Numpad 9
+            'up_right': [54, 73],          # RShift + Numpad 9
+            'out': [54, 181]                # RShift + Numpad /
         }
 
     def increase_throttle(self, duration=1):
@@ -72,7 +73,22 @@ class Airplane:
             for key in keys:
                 for _ in range (amount):
                     self.keyboard.press(key)
-                    time.sleep(0.01)
+                    time.sleep(0.04)
+            time.sleep(0.1)
+            for key in keys:
+                self.keyboard.release(key)
+        else:
+            print(f"Unknown direction: {direction}")
+
+    def pilot_zoom(self, direction='out', amount=1):
+        """Press keys to look in the specified direction."""
+        self.game.focus_dcs_window()
+        keys = self.directions.get(direction)
+        if keys:
+            for key in keys:
+                for _ in range (amount):
+                    self.keyboard.press(key)
+                    time.sleep(0.04)
             time.sleep(0.1)
             for key in keys:
                 self.keyboard.release(key)

@@ -9,6 +9,7 @@ class Procedures:
         self.airplane.pilot_look('left', amount=3)
         self.airplane.pilot_look()
         self.airplane.pilot_look('right', amount=3)
+        self.airplane.pilot_look()
 
 if __name__ == "__main__":
     game = Game()
