@@ -64,13 +64,15 @@ class Airplane:
             self.keyboard.release('w')
             print("Wheel brake released")
     
-    def pilot_look(self, direction='centre'):
+    def pilot_look(self, direction='centre', amount=1):
         """Press keys to look in the specified direction."""
         self.game.focus_dcs_window()
         keys = self.directions.get(direction)
         if keys:
             for key in keys:
-                self.keyboard.press(key)
+                for _ in range (amount):
+                    self.keyboard.press(key)
+                    time.sleep(0.01)
             time.sleep(0.1)
             for key in keys:
                 self.keyboard.release(key)

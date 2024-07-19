@@ -5,8 +5,10 @@ class Procedures:
         self.airplane = airplane
 
     def pilot_check_controls(self):
-        self.airplane.pilot_look('left')
-        self.airplane.pilot_look('left')
+        self.airplane.pilot_look()
+        self.airplane.pilot_look('left', amount=3)
+        self.airplane.pilot_look()
+        self.airplane.pilot_look('right', amount=3)
 
 if __name__ == "__main__":
     game = Game()
