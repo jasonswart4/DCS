@@ -11,7 +11,7 @@ def test_pilot_look(game, airplane):
     print("pilot look tested")
 
 def test_pilot_zoom(game, airplane):
-    directions = ['out']
+    directions = ['zoom_normal', 'zoom_out', 'zoom_normal']
     for direction in directions:
         airplane.pilot_look(direction)
         time.sleep(0.1)

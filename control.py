@@ -38,7 +38,8 @@ class Airplane:
             'up_left': [54, 71],           # RShift + Numpad 7
             'up': [54, 72],                # RShift + Numpad 8
             'up_right': [54, 73],          # RShift + Numpad 9
-            'out': [54, 181]                # RShift + Numpad /
+            'zoom_out': [54, 181],         # RShift + Numpad /
+            'zoom_normal': [156]           # Numpad Enter
         }
 
     def increase_throttle(self, duration=1):
@@ -80,7 +81,7 @@ class Airplane:
         else:
             print(f"Unknown direction: {direction}")
 
-    def pilot_zoom(self, direction='out', amount=1):
+    def pilot_zoom(self, direction='zoom_normal', amount=1):
         """Press keys to look in the specified direction."""
         self.game.focus_dcs_window()
         keys = self.directions.get(direction)
